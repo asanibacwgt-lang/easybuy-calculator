@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة التمويل - EasyBuy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1a1a5e;
+            --navy-light: #2a2a7a;
+            --navy-dark: #0f0f3d;
+            --burgundy: #a41e22;
+            --burgundy-light: #c42a2e;
+            --burgundy-dark: #7a1518;
+            --gold: #d4af37;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --bg: #f0f2f5;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --text-light: #7f8c8d;
+            --border: #e0e0e0;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-hover: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--navy);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(26, 26, 94, 0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: white;
+            letter-spacing: -1px;
+        }
+
+        .logo-text span {
+            color: var(--burgundy);
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .header-title {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            opacity: 0.85;
+            margin-bottom: 15px;
+        }
+
+        .currency-badge {
+            display: inline-block;
+            background: var(--burgundy);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* Main Layout */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 25px;
+            margin-bottom: 20px;
+            align-items: start;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--navy);
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title .icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--navy), var(--navy-light));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        /* Form Elements - Remove number arrows */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--navy);
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+            background: #fafbfc;
+            color: var(--text);
+        }
+
+        /* Remove number input arrows for all browsers */
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--navy);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(26, 26, 94, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #bdc3c7;
+        }
+
+        .input-suffix {
+            position: relative;
+        }
+
+        .input-suffix .form-input {
+            padding-left: 50px;
+        }
+
+        .input-suffix .suffix {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--burgundy);
+            font-weight: 700;
+            pointer-events: none;
+            font-size: 0.85rem;
+        }
+
+        /* Radio Group */
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #fafbfc;
+        }
+
+        .radio-option:hover {
+            border-color: var(--navy-light);
+            background: #f0f0fa;
+        }
+
+        .radio-option.active {
+            border-color: var(--navy);
+            background: linear-gradient(135deg, rgba(26,26,94,0.08), rgba(42,42,122,0.05));
+        }
+
+        .radio-option input {
+            display: none;
+        }
+
+        .radio-circle {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .radio-option.active .radio-circle {
+            border-color: var(--navy);
+            background: var(--navy);
+        }
+
+        .radio-circle::after {
+            content: '';
+            width: 7px;
+            height: 7px;
+            background: white;
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.2s;
+        }
+
+        .radio-option.active .radio-circle::after {
+            transform: scale(1);
+        }
+
+        .radio-text {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--navy);
+        }
+
+        .radio-sub {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 2px;
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--burgundy), var(--burgundy-light));
+            color: white;
+            box-shadow: 0 4px 15px rgba(164, 30, 34, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(164, 30, 34, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--border);
+            color: var(--text);
+            margin-top: 8px;
+        }
+
+        .btn-secondary:hover {
+            background: #d5dbde;
+        }
+
+        /* Results Section */
+        .results-section {
+            display: none;
+        }
+
+        .results-section.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Summary Cards */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, var(--navy), var(--navy-light));
+            color: white;
+            padding: 20px;
+            border-radius: 14px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-card::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -20%;
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+        }
+
+        .summary-card.warning {
+            background: linear-gradient(135deg, #d68910, var(--warning));
+        }
+
+        .summary-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-bottom: 6px;
+        }
+
+        .summary-value {
+            font-size: 1.6rem;
+            font-weight: 800;
+        }
+
+        .summary-sub {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        /* Eligibility Banner */
+        .eligibility-banner {
+            padding: 18px 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .eligibility-banner.eligible {
+            background: linear-gradient(135deg, rgba(39,174,96,0.12), rgba(39,174,96,0.04));
+            border: 2px solid var(--success);
+            color: var(--success);
+        }
+
+        .eligibility-banner.not-eligible {
+            background: linear-gradient(135deg, rgba(231,76,60,0.12), rgba(231,76,60,0.04));
+            border: 2px solid var(--danger);
+            color: var(--danger);
+        }
+
+        .eligibility-banner .icon {
+            font-size: 1.8rem;
+        }
+
+        /* Customer Info */
+        .customer-info {
+            background: linear-gradient(135deg, #f8f8fc, #f0f0f8);
+            border: 2px solid var(--navy);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .customer-info-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 12px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .info-label {
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        .info-value {
+            font-weight: 700;
+            color: var(--navy);
+            font-size: 0.9rem;
+        }
+
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--navy-dark), var(--navy));
+            color: white;
+        }
+
+        th {
+            padding: 15px 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        td {
+            padding: 14px 12px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        tbody tr {
+            transition: all 0.3s;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        tbody tr.eligible-row {
+            background: linear-gradient(90deg, rgba(39,174,96,0.06), transparent);
+        }
+
+        tbody tr.eligible-row:hover {
+            background: linear-gradient(90deg, rgba(39,174,96,0.12), transparent);
+        }
+
+        tbody tr.not-eligible-row {
+            background: linear-gradient(90deg, rgba(164,30,34,0.04), transparent);
+            opacity: 0.7;
+        }
+
+        .rate-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            background: var(--burgundy);
+            color: white;
+        }
+
+        .emi-value {
+            font-weight: 700;
+            color: var(--navy);
+            font-size: 1rem;
+        }
+
+        .first-emi-value {
+            font-weight: 800;
+            color: var(--burgundy);
+            font-size: 1.05rem;
+        }
+
+        .total-value {
+            font-weight: 800;
+            color: var(--navy-dark);
+            font-size: 1rem;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .status-badge.approved {
+            background: rgba(39,174,96,0.12);
+            color: var(--success);
+            border: 1px solid rgba(39,174,96,0.3);
+        }
+
+        .status-badge.rejected {
+            background: rgba(164,30,34,0.08);
+            color: var(--burgundy);
+            border: 1px solid rgba(164,30,34,0.2);
+        }
+
+        /* Print Button */
+        .print-section {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .btn-print {
+            background: linear-gradient(135deg, var(--navy), var(--navy-light));
+            color: white;
+            padding: 12px 35px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(26, 26, 94, 0.3);
+        }
+
+        .btn-print:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(26, 26, 94, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--navy);
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.4rem;
+            font-weight: 900;
+        }
+
+        .footer-logo span {
+            color: var(--burgundy);
+        }
+
+        .footer-text {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.85rem;
+        }
+
+        .footer-contact {
+            display: flex;
+            gap: 20px;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.85rem;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--navy-light);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--navy);
+        }
+
+        /* ===== PRINT STYLES - Optimized for A4 ===== */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 10mm;
+            }
+
+            body {
+                background: white !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .header, .hero, .btn-print, .footer, .btn-primary, .btn-secondary {
+                display: none !important;
+            }
+
+            .container {
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .main-grid {
+                display: block !important;
+                grid-template-columns: none !important;
+            }
+
+            .card {
+                display: none !important;
+            }
+
+            .results-section {
+                display: block !important;
+                animation: none !important;
+                page-break-inside: avoid;
+            }
+
+            .summary-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 10px !important;
+                margin-bottom: 15px !important;
+            }
+
+            .summary-card {
+                padding: 12px !important;
+                border-radius: 8px !important;
+                box-shadow: none !important;
+                border: 2px solid var(--navy) !important;
+                background: white !important;
+                color: var(--navy) !important;
+                page-break-inside: avoid;
+            }
+
+            .summary-card.warning {
+                border: 2px solid var(--warning) !important;
+                color: var(--warning) !important;
+                background: white !important;
+            }
+
+            .summary-label {
+                font-size: 0.75rem !important;
+                color: var(--text-light) !important;
+            }
+
+            .summary-value {
+                font-size: 1.3rem !important;
+                color: var(--navy) !important;
+            }
+
+            .eligibility-banner {
+                padding: 12px 15px !important;
+                margin-bottom: 15px !important;
+                font-size: 0.9rem !important;
+            }
+
+            .customer-info {
+                padding: 15px !important;
+                margin-bottom: 15px !important;
+                border: 2px solid var(--navy) !important;
+                background: white !important;
+            }
+
+            .customer-info-title {
+                font-size: 1rem !important;
+                margin-bottom: 10px !important;
+            }
+
+            .info-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 8px !important;
+            }
+
+            .info-item {
+                padding: 8px !important;
+            }
+
+            .table-container {
+                box-shadow: none !important;
+                border: 2px solid var(--navy) !important;
+                margin-bottom: 15px !important;
+            }
+
+            table {
+                font-size: 0.85rem !important;
+            }
+
+            th {
+                padding: 10px 8px !important;
+                font-size: 0.8rem !important;
+                background: var(--navy) !important;
+                color: white !important;
+            }
+
+            td {
+                padding: 10px 8px !important;
+                font-size: 0.85rem !important;
+            }
+
+            .rate-badge {
+                font-size: 0.75rem !important;
+                padding: 3px 8px !important;
+            }
+
+            .emi-value, .first-emi-value, .total-value {
+                font-size: 0.9rem !important;
+            }
+
+            .status-badge {
+                font-size: 0.75rem !important;
+                padding: 4px 8px !important;
+            }
+
+            tbody tr.eligible-row {
+                background: rgba(39,174,96,0.1) !important;
+            }
+
+            tbody tr.not-eligible-row {
+                background: rgba(164,30,34,0.05) !important;
+                opacity: 1 !important;
+            }
+
+            /* Print header */
+            .print-header {
+                display: block !important;
+                text-align: center;
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+                border-bottom: 3px solid var(--navy);
+            }
+
+            .print-logo {
+                font-size: 1.5rem;
+                font-weight: 900;
+                color: var(--navy);
+            }
+
+            .print-logo span {
+                color: var(--burgundy);
+            }
+
+            .print-date {
+                font-size: 0.85rem;
+                color: var(--text-light);
+                margin-top: 5px;
+            }
+        }
+
+        /* Hide print header on screen */
+        .print-header {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Print Header (visible only when printing) -->
+    <div class="print-header">
+        <div class="print-logo">EASY<span>Buy</span></div>
+        <div class="print-date">تقرير حاسبة التمويل - <span id="printDate"></span></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <div>
+                <div class="logo-text">EASY<span>Buy</span></div>
+                <div class="logo-sub">Installments Services</div>
+            </div>
+        </div>
+        <div class="header-title">🖥️ نظام حاسبة التمويل الداخلي</div>
+    </header>
+
+    <!-- Hero -->
+    <div class="hero">
+        <h1>📊 حاسبة التمويل</h1>
+        <p>احسب قسط التمويل وتحقق من أهلية العميل بسهولة وسرعة</p>
+        <span class="currency-badge">💰 الدينار الكويتي (KWD)</span>
+    </div>
+
+    <div class="container">
+        <div class="main-grid">
+            <!-- Input Form -->
+            <div class="card">
+                <div class="card-title">
+                    <div class="icon">📝</div>
+                    بيانات العميل
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">💵 مبلغ التمويل المطلوب</label>
+                    <div class="input-suffix">
+                        <input type="number" class="form-input" id="loanAmount" placeholder="أدخل المبلغ" min="1" step="0.001">
+                        <span class="suffix">KWD</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">💰 الراتب الشهري</label>
+                    <div class="input-suffix">
+                        <input type="number" class="form-input" id="salary" placeholder="أدخل الراتب" min="1" step="0.001">
+                        <span class="suffix">KWD</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">📋 مجموع الأقساط الحالية</label>
+                    <div class="input-suffix">
+                        <input type="number" class="form-input" id="currentInstallments" placeholder="أدخل مجموع الأقساط" min="0" step="0.001">
+                        <span class="suffix">KWD</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">🏢 نوع العميل</label>
+                    <div class="radio-group">
+                        <label class="radio-option active" onclick="selectType(this, 'government')">
+                            <input type="radio" name="clientType" value="government" checked>
+                            <div class="radio-circle"></div>
+                            <div>
+                                <div class="radio-text">موظف حكومي</div>
+                                <div class="radio-sub">نسبة الاستقطاع: 49%</div>
+                            </div>
+                        </label>
+                        <label class="radio-option" onclick="selectType(this, 'private')">
+                            <input type="radio" name="clientType" value="private">
+                            <div class="radio-circle"></div>
+                            <div>
+                                <div class="radio-text">قطاع خاص</div>
+                                <div class="radio-sub">نسبة الاستقطاع: 40%</div>
+                            </div>
+                        </label>
+                        <label class="radio-option" onclick="selectType(this, 'retired')">
+                            <input type="radio" name="clientType" value="retired">
+                            <div class="radio-circle"></div>
+                            <div>
+                                <div class="radio-text">متقاعد</div>
+                                <div class="radio-sub">نسبة الاستقطاع: 30%</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="calculate()">
+                    🔍 احسب النتائج
+                </button>
+                <button class="btn btn-secondary" onclick="resetForm()">
+                    🔄 مسح البيانات
+                </button>
+            </div>
+
+            <!-- Results -->
+            <div class="results-section" id="resultsSection">
+                <!-- Summary Cards -->
+                <div class="summary-grid">
+                    <div class="summary-card" id="maxInstallmentCard">
+                        <div class="summary-label">الحد الأقصى للأقساط</div>
+                        <div class="summary-value" id="maxInstallment">-</div>
+                        <div class="summary-sub" id="maxInstallmentSub">KWD</div>
+                    </div>
+                    <div class="summary-card warning" id="remainingCard">
+                        <div class="summary-label">المبلغ المتبقي للقسط الجديد</div>
+                        <div class="summary-value" id="remainingAmount">-</div>
+                        <div class="summary-sub" id="remainingSub">KWD</div>
+                    </div>
+                    <div class="summary-card" id="totalInstallmentsCard">
+                        <div class="summary-label">إجمالي الأقساط بعد التمويل</div>
+                        <div class="summary-value" id="totalInstallments">-</div>
+                        <div class="summary-sub" id="totalInstallmentsSub">KWD</div>
+                    </div>
+                </div>
+
+                <!-- Eligibility Banner -->
+                <div class="eligibility-banner" id="eligibilityBanner">
+                    <span class="icon" id="eligibilityIcon">✅</span>
+                    <span id="eligibilityText">-</span>
+                </div>
+
+                <!-- Customer Info -->
+                <div class="customer-info">
+                    <div class="customer-info-title">
+                        👤 ملخص بيانات العميل
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">مبلغ التمويل</span>
+                            <span class="info-value" id="infoLoanAmount">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">الراتب الشهري</span>
+                            <span class="info-value" id="infoSalary">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">نوع العميل</span>
+                            <span class="info-value" id="infoClientType">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">نسبة الاستقطاع</span>
+                            <span class="info-value" id="infoPercentage">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">الأقساط الحالية</span>
+                            <span class="info-value" id="infoCurrent">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">الحد الأقصى للقسط الجديد</span>
+                            <span class="info-value" id="infoMaxNew">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Table -->
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>المدة (شهر)</th>
+                                <th>نسبة الفائدة</th>
+                                <th>قيمة الفائدة</th>
+                                <th>القسط الشهري</th>
+                                <th>أول قسط<br><small style="font-size:0.7rem;opacity:0.8">(+7 KWD)</small></th>
+                                <th>المبلغ الإجمالي</th>
+                                <th>الحالة</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsTableBody">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="print-section">
+                    <button class="btn-print" onclick="window.print()">
+                        🖨️ طباعة / حفظ PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">EASY<span>Buy</span></div>
+            <div class="footer-text">© 2026 - حاسبة التمويل للاستخدام الداخلي</div>
+            <div class="footer-contact">
+                <span>📞 22203000</span>
+                <span>✉️ easybuy@easybuykw.com</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Interest rates configuration
+        const interestRates = {
+            4: 0.10,
+            6: 0.15,
+            12: 0.20,
+            18: 0.25,
+            24: 0.35
+        };
+
+        const clientTypes = {
+            government: { name: 'موظف حكومي', percentage: 0.49 },
+            private: { name: 'قطاع خاص', percentage: 0.40 },
+            retired: { name: 'متقاعد', percentage: 0.30 }
+        };
+
+        let selectedType = 'government';
+
+        function selectType(element, type) {
+            document.querySelectorAll('.radio-option').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            selectedType = type;
+        }
+
+        function formatNumber(num) {
+            return num.toLocaleString('en-US', { minimumFractionDigits: 3, maximumFractionDigits: 3 });
+        }
+
+        function calculate() {
+            const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+            const salary = parseFloat(document.getElementById('salary').value);
+            const currentInstallments = parseFloat(document.getElementById('currentInstallments').value) || 0;
+
+            // Validation
+            if (!loanAmount || loanAmount <= 0) {
+                alert('❌ الرجاء إدخال مبلغ التمويل');
+                return;
+            }
+            if (!salary || salary <= 0) {
+                alert('❌ الرجاء إدخال الراتب الشهري');
+                return;
+            }
+
+            const clientInfo = clientTypes[selectedType];
+            const maxAllowed = salary * clientInfo.percentage;
+            const remainingForNew = Math.max(0, maxAllowed - currentInstallments);
+
+            // Update summary cards
+            document.getElementById('maxInstallment').textContent = formatNumber(maxAllowed);
+            document.getElementById('remainingAmount').textContent = formatNumber(remainingForNew);
+            document.getElementById('totalInstallments').textContent = formatNumber(currentInstallments);
+
+            // Update customer info
+            document.getElementById('infoLoanAmount').textContent = formatNumber(loanAmount) + ' KWD';
+            document.getElementById('infoSalary').textContent = formatNumber(salary) + ' KWD';
+            document.getElementById('infoClientType').textContent = clientInfo.name;
+            document.getElementById('infoPercentage').textContent = (clientInfo.percentage * 100) + '%';
+            document.getElementById('infoCurrent').textContent = formatNumber(currentInstallments) + ' KWD';
+            document.getElementById('infoMaxNew').textContent = formatNumber(remainingForNew) + ' KWD';
+
+            // Calculate and populate table
+            const tableBody = document.getElementById('resultsTableBody');
+            tableBody.innerHTML = '';
+
+            let hasEligible = false;
+            const durations = [4, 6, 12, 18, 24];
+
+            durations.forEach(months => {
+                const rate = interestRates[months];
+                const interestAmount = loanAmount * rate;
+                const totalAmount = loanAmount + interestAmount;
+                const monthlyEMI = totalAmount / months;
+                const firstEMI = monthlyEMI + 7; // First EMI + 7 KWD
+                const isEligible = monthlyEMI <= remainingForNew;
+
+                if (isEligible) hasEligible = true;
+
+                const row = document.createElement('tr');
+                row.className = isEligible ? 'eligible-row' : 'not-eligible-row';
+
+                row.innerHTML = `
+                    <td style="font-weight: 700; font-size: 1.05rem;">${months} شهر</td>
+                    <td><span class="rate-badge">${(rate * 100).toFixed(0)}%</span></td>
+                    <td>${formatNumber(interestAmount)} KWD</td>
+                    <td class="emi-value">${formatNumber(monthlyEMI)} KWD</td>
+                    <td class="first-emi-value">${formatNumber(firstEMI)} KWD</td>
+                    <td class="total-value">${formatNumber(totalAmount)} KWD</td>
+                    <td>
+                        <span class="status-badge ${isEligible ? 'approved' : 'rejected'}">
+                            ${isEligible ? '✅ مسموح' : '❌ غير مسموح'}
+                        </span>
+                    </td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+
+            // Update eligibility banner
+            const banner = document.getElementById('eligibilityBanner');
+            const icon = document.getElementById('eligibilityIcon');
+            const text = document.getElementById('eligibilityText');
+
+            if (hasEligible) {
+                banner.className = 'eligibility-banner eligible';
+                icon.textContent = '✅';
+                text.textContent = `العميل مؤهل! يمكنه الحصول على تمويل بقسط يصل إلى ${formatNumber(remainingForNew)} KWD شهرياً`;
+            } else {
+                banner.className = 'eligibility-banner not-eligible';
+                icon.textContent = '❌';
+                text.textContent = `العميل غير مؤهل. القسط المطلوب يتجاوز الحد المسموح به (${formatNumber(remainingForNew)} KWD)`;
+            }
+
+            // Update print date
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('ar-KW', { year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('printDate').textContent = dateStr;
+
+            // Show results
+            document.getElementById('resultsSection').classList.add('show');
+
+            // Scroll to results
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function resetForm() {
+            document.getElementById('loanAmount').value = '';
+            document.getElementById('salary').value = '';
+            document.getElementById('currentInstallments').value = '';
+            document.getElementById('resultsSection').classList.remove('show');
+
+            // Reset radio to government
+            document.querySelectorAll('.radio-option').forEach(el => el.classList.remove('active'));
+            document.querySelector('.radio-option').classList.add('active');
+            selectedType = 'government';
+        }
+
+        // Allow Enter key to calculate
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculate();
+            }
+        });
+    </script>
+</body>
+</html>
