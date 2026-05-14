@@ -1094,12 +1094,12 @@
             document.getElementById('totalInstallments').textContent = formatNumber(currentInstallments);
 
             // Update customer info
-            document.getElementById('infoLoanAmount').textContent = formatNumber(loanAmount) + ' KWD';
-            document.getElementById('infoSalary').textContent = formatNumber(salary) + ' KWD';
+            document.getElementById('infoLoanAmount').textContent = formatNumber(loanAmount) ;
+            document.getElementById('infoSalary').textContent = formatNumber(salary) ;
             document.getElementById('infoClientType').textContent = clientInfo.name;
             document.getElementById('infoPercentage').textContent = (clientInfo.percentage * 100) + '%';
-            document.getElementById('infoCurrent').textContent = formatNumber(currentInstallments) + ' KWD';
-            document.getElementById('infoMaxNew').textContent = formatNumber(remainingForNew) + ' KWD';
+            document.getElementById('infoCurrent').textContent = formatNumber(currentInstallments) ;
+            document.getElementById('infoMaxNew').textContent = formatNumber(remainingForNew) ;
 
             // Calculate and populate table
             const tableBody = document.getElementById('resultsTableBody');
@@ -1124,10 +1124,10 @@
                 row.innerHTML = `
                     <td style="font-weight: 700; font-size: 1.05rem;">${months} شهر</td>
                     <td><span class="rate-badge">${(rate * 100).toFixed(0)}%</span></td>
-                    <td>${formatNumber(interestAmount)} KWD</td>
-                    <td class="emi-value">${formatNumber(monthlyEMI)} KWD</td>
-                    <td class="first-emi-value">${formatNumber(firstEMI)} KWD</td>
-                    <td class="total-value">${formatNumber(totalAmount)} KWD</td>
+                    <td>${formatNumber(interestAmount)} </td>
+                    <td class="emi-value">${formatNumber(monthlyEMI)} </td>
+                    <td class="first-emi-value">${formatNumber(firstEMI)} </td>
+                    <td class="total-value">${formatNumber(totalAmount)} </td>
                     <td>
                         <span class="status-badge ${isEligible ? 'approved' : 'rejected'}">
                             ${isEligible ? '✅ مسموح' : '❌ غير مسموح'}
